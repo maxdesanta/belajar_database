@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:belajar_database/model/data_mhs.dart';
 
 class InputData extends StatefulWidget {
-  final data_mhs data_mahasiswa;
+  final data_mhs? data_mahasiswa;
   InputData(this.data_mahasiswa);
 
   @override
@@ -10,19 +10,31 @@ class InputData extends StatefulWidget {
 }
 
 class _InputDataState extends State<InputData> {
-  final data_mhs data_mahasiswa;
+  final data_mhs? data_mahasiswa;
   _InputDataState(this.data_mahasiswa);
   TextEditingController namaController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
+  TextEditingController tanggalLahirController = TextEditingController();
+  TextEditingController nomorTeleponController = TextEditingController();
+  TextEditingController hobiController = TextEditingController();
+
+  String jenisKelamin = "Laki-laki";
+
+  @override
+  void initState() {
+    super.initState();
+    if (data_mahasiswa != null) {
+      namaController.text = data_mahasiswa!.namaMhs;
+      alamatController.text = data_mahasiswa!.alamat;
+      tanggalLahirController.text = data_mahasiswa!.tanggalLahir;
+      nomorTeleponController.text = data_mahasiswa!.nomorTelepon;
+      hobiController.text = data_mahasiswa!.hobi;
+      jenisKelamin = data_mahasiswa!.jenisKelamin;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // kondisi
-    if (data_mahasiswa != null) {
-      namaController.text = data_mahasiswa.nama;
-      alamatController.text = data_mahasiswa.alamat;
-    }
-
     return Scaffold(
       appBar: AppBar(
         title:
@@ -49,7 +61,7 @@ class _InputDataState extends State<InputData> {
                 controller: namaController,
               ),
             ),
-            // telepon
+            // alamat
             Padding(
               padding: EdgeInsets.only(top: 20, bottom: 20),
               child: TextField(
@@ -61,7 +73,97 @@ class _InputDataState extends State<InputData> {
                   ),
                 ),
                 controller: alamatController,
+              ),
+            ),
+            // tanggal lahir
+            Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 20),
+              child: TextField(
+                onChanged: (value) => {},
+                decoration: InputDecoration(
+                  labelText: 'Tanggal lahir',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                controller: tanggalLahirController,
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101),
+                  );
+
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+                    setState(() {
+                      tanggalLahirController.text = formattedDate;
+                    });
+                  }
+                },
+              ),
+            ),
+            // nomor telepon
+            Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 20),
+              child: TextField(
+                onChanged: (value) => {},
+                decoration: InputDecoration(
+                  labelText: 'Nomor Telepon',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                controller: nomorTeleponController,
                 keyboardType: TextInputType.phone,
+              ),
+            ),
+            // jenis kelamin
+            Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Jenis Kelamin"),
+                  RadioListTile(
+                    value: "laki-laki",
+                    title: Text("Laki-laki"),
+                    groupValue: jenisKelamin,
+                    onChanged: (value) {
+                      setState(() {
+                        jenisKelamin = value.toString();
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    value: "perempuan",
+                    title: Text("Perempuan"),
+                    groupValue: jenisKelamin,
+                    onChanged: (value) {
+                      setState(() {
+                        jenisKelamin = value.toString();
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            // hobi
+            Padding(
+              padding: EdgeInsets.only(top: 20, bottom: 20),
+              child: TextField(
+                onChanged: (value) => {},
+                decoration: InputDecoration(
+                  labelText: 'Hobi',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                controller: hobiController,
+                maxLines: null,
               ),
             ),
             Padding(
@@ -71,31 +173,65 @@ class _InputDataState extends State<InputData> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
+                        data_mhs data;
                         if (data_mahasiswa == null) {
                           // tambah data
-                          data_mahasiswa = data_mhs(
-                            data_mahasiswa.id,
+                          data = data_mhs(
+                            null,
                             namaController.text,
                             alamatController.text,
+                            tanggalLahirController.text,
+                            jenisKelamin,
+                            nomorTeleponController.text,
+                            hobiController.text,
                           );
                         } else {
                           // edit data
-                          data_mahasiswa.nama = namaController.text;
-                          data_mahasiswa.alamat = alamatController.text;
+                          data = data_mhs(
+                            data_mahasiswa!.id,
+                            namaController.text,
+                            alamatController.text,
+                            tanggalLahirController.text,
+                            jenisKelamin,
+                            nomorTeleponController.text,
+                            hobiController.text,
+                          );
                         }
 
-                        Navigator.pop(context, data_mahasiswa);
+                        Navigator.pop(context, data);
                       },
-                      child: Text("Simpan"),
+
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        elevation: 0,
+                      ),
+
+                      child: Text(
+                        "Simpan",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                   Container(width: 5),
                   Expanded(
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        elevation: 0,
+                      ),
                       onPressed: () {
                         Navigator.pop(context, data_mahasiswa);
                       },
-                      child: Text("Batal"),
+                      child: Text(
+                        "Batal",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ],

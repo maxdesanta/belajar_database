@@ -19,13 +19,17 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late DbHelper dbHelper;
   int count = 0;
-  List<data_mhs> dataMhs = List<data_mhs>.empty();
+  List<data_mhs> dataMhs = [];
+
+  @override
+  void initState() {
+    super.initState();
+    dbHelper = DbHelper();
+    updateListView();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (dataMhs == null) {
-      dataMhs = List<data_mhs>.empty();
-    }
     return Scaffold(
       appBar: AppBar(title: const Text('Data Mahasiswa')),
       body: createListView(),
@@ -47,7 +51,7 @@ class _HomeState extends State<Home> {
       context,
       MaterialPageRoute(
         builder: (BuildContext context) {
-          return input_data(d_mhs);
+          return InputData(data);
         },
       ),
     );
@@ -85,43 +89,43 @@ class _HomeState extends State<Home> {
       },
     );
   }
-}
 
-// tambah data
-void insertData(data_mhs object) async {
-  int result = await DbHelper().insert(object);
-  if (result > 0) {
-    updateListView();
+  // tambah data
+  void insertData(data_mhs object) async {
+    int result = await dbHelper.insert(object);
+    if (result > 0) {
+      updateListView();
+    }
   }
-}
 
-// edit data
-void editData(data_mhs object) async {
-  int result = await DbHelper().update(object);
-  if (result > 0) {
-    updateListView();
+  // edit data
+  void editData(data_mhs object) async {
+    int result = await dbHelper.update(object);
+    if (result > 0) {
+      updateListView();
+    }
   }
-}
 
-// hapus kontak
-void deleteContact(data_mhs object) async {
-  int result = await DbHelper().delete(object.id);
-  if (result > 0) {
-    updateListView();
+  // hapus kontak
+  void deleteContact(data_mhs object) async {
+    int result = await dbHelper.delete(object.id!);
+    if (result > 0) {
+      updateListView();
+    }
   }
-}
 
-void updateListView() {
-  final Future<Database> dbFuture = DbHelper().initDB();
+  void updateListView() {
+    final Future<Database> dbFuture = dbHelper.initDB();
 
-  dbFuture.then((database) {
-    Future<List<data_mhs>> contactListFuture = DbHelper().getMhsList();
+    dbFuture.then((database) {
+      Future<List<data_mhs>> contactListFuture = dbHelper.getMhsList();
 
-    contactListFuture.then((contactList) {
-      setState(() {
-        this.mhsList = contactList;
-        this.count = contactList.length;
-      })
+      contactListFuture.then((contactList) {
+        setState(() {
+          this.dataMhs = contactList;
+          this.count = contactList.length;
+        });
+      });
     });
-  });
+  }
 }
