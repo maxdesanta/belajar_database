@@ -12,7 +12,7 @@ class InputData extends StatefulWidget {
 class _InputDataState extends State<InputData> {
   final data_mhs? data_mahasiswa;
   _InputDataState(this.data_mahasiswa);
-  
+
   // Controllers for text fields
   TextEditingController namaController = TextEditingController();
   TextEditingController nimController = TextEditingController();
@@ -42,9 +42,16 @@ class _InputDataState extends State<InputData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: data_mahasiswa == null
-            ? Text('Tambah Data Mahasiswa', style: TextStyle(color: Colors.white))
-            : Text('Edit Data Mahasiswa', style: TextStyle(color: Colors.white)),
+        title:
+            data_mahasiswa == null
+                ? Text(
+                  'Tambah Data Mahasiswa',
+                  style: TextStyle(color: Colors.white),
+                )
+                : Text(
+                  'Edit Data Mahasiswa',
+                  style: TextStyle(color: Colors.white),
+                ),
         backgroundColor: Colors.blue,
         iconTheme: IconThemeData(color: Colors.white),
         leading: IconButton(
@@ -72,7 +79,9 @@ class _InputDataState extends State<InputData> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          data_mahasiswa == null ? 'Form Data Mahasiswa Baru' : 'Form Edit Data Mahasiswa',
+                          data_mahasiswa == null
+                              ? 'Form Data Mahasiswa Baru'
+                              : 'Form Edit Data Mahasiswa',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -89,7 +98,7 @@ class _InputDataState extends State<InputData> {
                   ),
                 ),
               ),
-              
+
               // Basic Info Section
               Card(
                 elevation: 2,
@@ -107,195 +116,221 @@ class _InputDataState extends State<InputData> {
                         ),
                       ),
                       SizedBox(height: 16),
-                      
-                    // Nama field
-TextFormField(
-  controller: namaController,
-  decoration: InputDecoration(
-    labelText: 'Nama Lengkap',
-    prefixIcon: Icon(Icons.person, color: Colors.blue),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: Colors.blue, width: 2),
-    ),
-  ),
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Nama tidak boleh kosong';
-    }
-    // Validate only letters and spaces are entered
-    if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
-      return 'Nama hanya boleh berisi huruf';
-    }
-    return null;
-  },
-),
-SizedBox(height: 16),
 
-// NIM field
-TextFormField(
-  controller: nimController,
-  decoration: InputDecoration(
-    labelText: 'NIM',
-    prefixIcon: Icon(Icons.badge, color: Colors.blue),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: Colors.blue, width: 2),
-    ),
-  ),
-  keyboardType: TextInputType.number,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'NIM tidak boleh kosong';
-    }
-    // Validate only numbers are entered
-    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-      return 'NIM hanya boleh berisi angka';
-    }
-    return null;
-  },
-),
-SizedBox(height: 16),
+                      // Nama field
+                      TextFormField(
+                        controller: namaController,
+                        decoration: InputDecoration(
+                          labelText: 'Nama Lengkap',
+                          prefixIcon: Icon(Icons.person, color: Colors.blue),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nama tidak boleh kosong';
+                          }
+                          // Validate only letters and spaces are entered
+                          if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
+                            return 'Nama hanya boleh berisi huruf';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
 
-// Alamat field
-TextFormField(
-  controller: alamatController,
-  decoration: InputDecoration(
-    labelText: 'Alamat',
-    prefixIcon: Icon(Icons.home, color: Colors.blue),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: Colors.blue, width: 2),
-    ),
-  ),
-  maxLines: 2,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Alamat tidak boleh kosong';
-    }
-    return null;
-  },
-),
-SizedBox(height: 16),
+                      // NIM field
+                      TextFormField(
+                        controller: nimController,
+                        decoration: InputDecoration(
+                          labelText: 'NIM',
+                          prefixIcon: Icon(Icons.badge, color: Colors.blue),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'NIM tidak boleh kosong';
+                          }
+                          // Validate only numbers are entered
+                          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                            return 'NIM hanya boleh berisi angka';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
 
-// Tanggal Lahir field
-TextFormField(
-  controller: tanggalLahirController,
-  decoration: InputDecoration(
-    labelText: 'Tanggal Lahir',
-    prefixIcon: Icon(Icons.calendar_today, color: Colors.blue),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: Colors.blue, width: 2),
-    ),
-  ),
-  readOnly: true,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Tanggal lahir tidak boleh kosong';
-    }
-    return null;
-  },
-  onTap: () async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1950),
-      lastDate: DateTime.now(),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Colors.blue, // header background color
-              onPrimary: Colors.white, // header text color
-              onSurface: Colors.black, // body text color
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
+                      // Alamat field
+                      TextFormField(
+                        controller: alamatController,
+                        decoration: InputDecoration(
+                          labelText: 'Alamat',
+                          prefixIcon: Icon(Icons.home, color: Colors.blue),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        maxLines: 2,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Alamat tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
 
-    if (pickedDate != null) {
-      String formattedDate =
-          "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
-      setState(() {
-        tanggalLahirController.text = formattedDate;
-      });
-    }
-  },
-),
-SizedBox(height: 16),
+                      // Tanggal Lahir field
+                      TextFormField(
+                        controller: tanggalLahirController,
+                        decoration: InputDecoration(
+                          labelText: 'Tanggal Lahir',
+                          prefixIcon: Icon(
+                            Icons.calendar_today,
+                            color: Colors.blue,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        readOnly: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Tanggal lahir tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1950),
+                            lastDate: DateTime.now(),
+                            builder: (context, child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme: ColorScheme.light(
+                                    primary:
+                                        Colors.blue, // header background color
+                                    onPrimary:
+                                        Colors.white, // header text color
+                                    onSurface: Colors.black, // body text color
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                          );
 
-// Nomor Telepon field
-TextFormField(
-  controller: nomorTeleponController,
-  decoration: InputDecoration(
-    labelText: 'Nomor Telepon',
-    prefixIcon: Icon(Icons.phone, color: Colors.blue),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: Colors.blue, width: 2),
-    ),
-  ),
-  keyboardType: TextInputType.phone,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Nomor telepon tidak boleh kosong';
-    }
-    // Validate only numbers are entered
-    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-      return 'Nomor telepon hanya boleh berisi angka';
-    }
-    return null;
-  },
-),
-SizedBox(height: 16),
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+                            setState(() {
+                              tanggalLahirController.text = formattedDate;
+                            });
+                          }
+                        },
+                      ),
+                      SizedBox(height: 16),
 
-// Hobi field
-TextFormField(
-  controller: hobiController,
-  decoration: InputDecoration(
-    labelText: 'Hobi',
-    prefixIcon: Icon(Icons.sports_soccer, color: Colors.blue),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: Colors.blue, width: 2),
-    ),
-  ),
-  maxLines: 2,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Hobi tidak boleh kosong';
-    }
-    return null;
-  },
-),
+                      // Nomor Telepon field
+                      TextFormField(
+                        controller: nomorTeleponController,
+                        decoration: InputDecoration(
+                          labelText: 'Nomor Telepon',
+                          prefixIcon: Icon(Icons.phone, color: Colors.blue),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        keyboardType: TextInputType.phone,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nomor telepon tidak boleh kosong';
+                          }
+                          // Validate only numbers are entered
+                          if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                            return 'Nomor telepon hanya boleh berisi angka';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+
+                      // Hobi field
+                      TextFormField(
+                        controller: hobiController,
+                        decoration: InputDecoration(
+                          labelText: 'Hobi',
+                          prefixIcon: Icon(
+                            Icons.sports_soccer,
+                            color: Colors.blue,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        maxLines: 2,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Hobi tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
                     ],
                   ),
                 ),
               ),
-              
+
               SizedBox(height: 24),
-              
+
               // Button Row (Batal on left, Simpan on right)
               Row(
                 children: <Widget>[

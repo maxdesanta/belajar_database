@@ -251,14 +251,11 @@ class _HomeState extends State<Home> {
                             ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 // Edit Button
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.edit,
-                                    color: Colors.blue,
-                                  ),
-                                  onPressed: () async {
+                                InkWell(
+                                  onTap: () async {
                                     var result = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -279,16 +276,22 @@ class _HomeState extends State<Home> {
                                       }
                                     }
                                   },
+                                  child: Padding(
+                                    padding: EdgeInsets.all(4),
+                                    child: Icon(Icons.edit,
+                                    color: Colors.blue,)
+                                  ),
                                 ),
+                                SizedBox(width: 8),
                                 // Delete Button
-                                IconButton(
-                                  icon: Icon(
+                                InkWell(
+                                  onTap: () async{
+                                    _confirmDelete(context, listMhs[index]);
+                                  },
+                                  child: Icon(
                                     Icons.delete,
                                     color: Colors.red,
                                   ),
-                                  onPressed: () {
-                                    _confirmDelete(context, listMhs[index]);
-                                  },
                                 ),
                               ],
                             ),
@@ -304,7 +307,10 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add, 
+          color: Colors.white
+          ,),
         backgroundColor: Colors.blue,
         onPressed: () async {
           var result = await Navigator.push(
