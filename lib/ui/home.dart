@@ -35,14 +35,11 @@ class _HomeState extends State<Home> {
         title: const Text(
           'Data Mahasiswa',
           style: TextStyle(color: Color(0XFFfffefb)),
-
         ),
-        leading: Icon(
-          Icons.home,
-          color: Color(0XFFfffefb)
-        ),
+        leading: Icon(Icons.home, color: Color(0XFFfffefb)),
         backgroundColor: Color(0XFF00668c),
       ),
+      backgroundColor: Color(0xfffffefb),
       body: Padding(
         padding: EdgeInsets.only(top: 15.0),
         child: createListView(),
@@ -55,7 +52,12 @@ class _HomeState extends State<Home> {
           }
         },
         tooltip: 'Tambah Data',
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Color(0XFFfffefb),
+        ),
+        backgroundColor: Color(0XFF00668c),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       ),
     );
   }
@@ -76,28 +78,31 @@ class _HomeState extends State<Home> {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int index) {
-        return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Color(0XFFd4eaf7),
-              child: Icon(Icons.people),
-            ),
-            title: Text(dataMhs[index].namaMhs),
-            subtitle: Text(dataMhs[index].alamat),
-            trailing: GestureDetector(
-              child: const Icon(Icons.delete),
-              onTap: () {
-                deleteContact(dataMhs[index]);
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 5.0),
+          child: Card(
+            color: Color(0XFFf5f4f1),
+            elevation: 2.0,
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Color(0XFFd4eaf7),
+                child: Icon(Icons.person, color: Color(0XFF3b3c3d)),
+              ),
+              title: Text(dataMhs[index].namaMhs),
+              subtitle: Text(dataMhs[index].alamat),
+              trailing: GestureDetector(
+                child: const Icon(Icons.delete),
+                onTap: () {
+                  deleteContact(dataMhs[index]);
+                },
+              ),
+              onTap: () async {
+                var data = await navigateToEntryForm(context, dataMhs[index]);
+                if (data != null) {
+                  editData(data);
+                }
               },
             ),
-            onTap: () async {
-              var data = await navigateToEntryForm(context, dataMhs[index]);
-              if (data != null) {
-                editData(data);
-              }
-            },
           ),
         );
       },

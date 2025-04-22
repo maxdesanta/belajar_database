@@ -39,17 +39,25 @@ class _InputDataState extends State<InputData> {
       appBar: AppBar(
         title:
             data_mahasiswa == null
-                ? Text('Tambah Data Mahasiswa')
-                : Text('Edit Data Mahasiswa'),
+                ? Text(
+                  'Tambah Data Mahasiswa',
+                  style: TextStyle(color: Color(0XFFfffefb)),
+                  )
+                : Text(
+                  'Edit Data Mahasiswa',
+                  style: TextStyle(color: Color(0XFFfffefb))
+                ),
         leading: Icon(Icons.keyboard_arrow_left),
+        backgroundColor: Color(0xff00668c),
       ),
+      backgroundColor: Color(0xfffffefb),
       body: Padding(
-        padding: EdgeInsets.only(top: 15, left: 10, right: 10),
+        padding: EdgeInsets.only(top: 15, left: 8, right: 8),
         child: ListView(
           children: <Widget>[
             // nama
             Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+              padding: EdgeInsets.only(top: 10, bottom: 10),
               child: TextField(
                 onChanged: (value) => {},
                 decoration: InputDecoration(
@@ -63,7 +71,7 @@ class _InputDataState extends State<InputData> {
             ),
             // alamat
             Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+              padding: EdgeInsets.only(top: 10, bottom: 10),
               child: TextField(
                 onChanged: (value) => {},
                 decoration: InputDecoration(
@@ -77,7 +85,7 @@ class _InputDataState extends State<InputData> {
             ),
             // tanggal lahir
             Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+              padding: EdgeInsets.only(top: 10, bottom: 10),
               child: TextField(
                 onChanged: (value) => {},
                 decoration: InputDecoration(
@@ -108,7 +116,7 @@ class _InputDataState extends State<InputData> {
             ),
             // nomor telepon
             Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+              padding: EdgeInsets.only(top: 10, bottom: 10),
               child: TextField(
                 onChanged: (value) => {},
                 decoration: InputDecoration(
@@ -123,7 +131,7 @@ class _InputDataState extends State<InputData> {
             ),
             // jenis kelamin
             Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+              padding: EdgeInsets.only(top: 10, bottom: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -153,7 +161,7 @@ class _InputDataState extends State<InputData> {
             ),
             // hobi
             Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 20),
+              padding: EdgeInsets.only(top: 10, bottom: 10),
               child: TextField(
                 onChanged: (value) => {},
                 decoration: InputDecoration(
