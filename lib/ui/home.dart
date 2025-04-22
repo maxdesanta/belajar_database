@@ -31,8 +31,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Data Mahasiswa')),
-      body: createListView(),
+      appBar: AppBar(
+        title: const Text(
+          'Data Mahasiswa',
+          style: TextStyle(color: Color(0XFFfffefb)),
+
+        ),
+        leading: Icon(
+          Icons.home,
+          color: Color(0XFFfffefb)
+        ),
+        backgroundColor: Color(0XFF00668c),
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(top: 15.0),
+        child: createListView(),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var data = await navigateToEntryForm(context, null);
@@ -67,7 +81,7 @@ class _HomeState extends State<Home> {
           elevation: 2.0,
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: Colors.lightBlue,
+              backgroundColor: Color(0XFFd4eaf7),
               child: Icon(Icons.people),
             ),
             title: Text(dataMhs[index].namaMhs),

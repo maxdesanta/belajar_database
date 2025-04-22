@@ -73,6 +73,21 @@ class DbHelper {
     }
   }
 
+  Future<void> copyDbToExternal() async {
+  Directory internalDir = await getApplicationDocumentsDirectory();
+  String dbPath = '${internalDir.path}/data_mhs.db';
+
+  Directory? externalDir = await getExternalStorageDirectory();
+  if (externalDir != null) {
+    String newPath = '${externalDir.path}/backup_data_mhs.db';
+    final dbFile = File(dbPath);
+    if(await dbFile.exists()) {
+      await dbFile.copy(newPath);
+      print('Database copied to $newPath');
+    }
+  }
+}
+
   // Operasi Insert: Menyisipkan data_mhs baru dan mendapatkan idnya
   Future<int> insert(data_mhs object) async {
     Database db = await this.initDB();
